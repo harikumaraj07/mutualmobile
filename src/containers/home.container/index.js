@@ -1,85 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getUserFromId, dataBluePrint } from '../../utils/data.utils';
-import { generateId } from '../../utils/general.utils';
 import Home from '../../templates/home.template';
-import { loadDataAction, addContactAction, updateContactAction, removeContactAction, setActiveUserAction } from '../../actions/app.actions';
+import { getAllPostsAction, getAllUsersAction } from '../../actions/app.actions';
+import { getUserDetailsFromId } from '../../utils/general.utils';
 
 const propTypes = {
-  contacts: PropTypes.array,
-  activeUser: PropTypes.object,
-  loadData: PropTypes.func,
-  addContact: PropTypes.func,
-  updateContact: PropTypes.func,
-  removeContact: PropTypes.func,
+  posts: PropTypes.array,
+  users: PropTypes.array,
+  getAllPosts: PropTypes.func,
+  getAllUsers: PropTypes.func,
 };
 
 const defaultProps = {
-  contacts: [],
-  activeUser: {},
-  loadData: () => { },
-  addContact: () => { },
-  updateContact: () => { },
-  removeContact: () => { },
+  posts: [],
+  users: [],
+  getAllPosts: () => { },
+  getAllUsers: () => { },
 };
 
 const HomeContainer = props => {
 
-  const { addContact, updateContact, removeContact, setActiveUser, activeUser } = props;
+  const { getAllPosts, getAllUsers, users, navigation: { navigate } } = props;
 
-  const [modalVisible, setModalVisible] = useState(false);
+  useEffect(() => {
+    getAllPosts();
+    getAllUsers();
+  }, []);
 
-  const [initialValues, setInitialValues] = useState(dataBluePrint);
+  const getUserDetails = id => getUserDetailsFromId(id, users);
 
-  const toggleModalVisible = () => {
-    if (modalVisible) {
-      setInitialValues(dataBluePrint);
-    }
-    setModalVisible(val => !val);
-  }
-
-  const onChangeActiveUser = id => {
-    setActiveUser(getUserFromId(id));
+  const onPressPost = post => {
+    navigate('postDetails', { post });
   };
 
-  const editItem = (item) => {
-    setInitialValues(item);
-    toggleModalVisible();
-  };
-
-  const onSubmit = (values) => {
-
-    const payload = {
-      ...values,
-    };
-
-    if (values.id) {
-      updateContact(payload);
-    } else {
-      payload.id = generateId();
-      payload.userId = activeUser.userId;
-      addContact(payload);
-    }
-    toggleModalVisible();
-  };
-
-  const deleteItem = (item) => {
-    console.log(item);
-    removeContact(item);
+  const onPressUserName = (user) => {
+    navigate('userDetails', { user });
   };
 
   return (
     <Home
       {...props}
-      onChangeActiveUser={onChangeActiveUser}
-      editItem={editItem}
-      deleteItem={deleteItem}
-      modalVisible={modalVisible}
-      toggleModalVisible={toggleModalVisible}
-      initialValues={initialValues}
-      onSubmit={onSubmit}
+      getUserDetails={getUserDetails}
+      onPressPost={onPressPost}
+      onPressUserName={onPressUserName}
     />
   );
 };
@@ -89,16 +54,13 @@ HomeContainer.defaultProps = defaultProps;
 HomeContainer.propTypes = propTypes;
 
 const mapStateToProps = state => ({
-  contacts: state.app.contacts,
-  activeUser: state.app.activeUser,
+  posts: state.app.posts,
+  users: state.app.users,
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadData: () => dispatch(loadDataAction()),
-  addContact: data => dispatch(addContactAction(data)),
-  updateContact: data => dispatch(updateContactAction(data)),
-  removeContact: data => dispatch(removeContactAction(data)),
-  setActiveUser: user => dispatch(setActiveUserAction(user)),
+  getAllPosts: () => dispatch(getAllPostsAction()),
+  getAllUsers: () => dispatch(getAllUsersAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

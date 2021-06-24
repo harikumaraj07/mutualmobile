@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { useNavigation } from '@react-navigation/native';
-import { Picker } from '@react-native-picker/picker';
+import {useNavigation} from '@react-navigation/native';
 
-import {users} from '../../utils/data.utils';
 import styles from './styles';
 
 const propTypes = {
@@ -27,34 +25,32 @@ const defaultProps = {
   toolbarContainer: {},
   transparentBackground: false,
   rightIcon: null,
-  onPressRightIcon: () => { },
+  onPressRightIcon: () => {},
 };
 
 const Header = props => {
   const navigation = useNavigation();
-
-  const { activeUser, onChangeActiveUser, toolbarContainer, transparentBackground, leftIcon, leftIconId, leftIconName, title, onPressLeftIcon } = props;
 
   return (
     <View>
       <View
         style={[
           styles.toolbarContainer,
-          toolbarContainer,
-          transparentBackground ? styles.transparentBackground : {},
+          props.toolbarContainer,
+          props.transparentBackground ? styles.transparentBackground : {},
         ]}>
-        {!!leftIcon && (
+        {!!props.leftIcon && (
           <TouchableOpacity
-            accessibilityLabel={leftIconId}
-            testID={leftIconId}
+            accessibilityLabel={props.leftIconId}
+            testID={props.leftIconId}
             onPress={
-              onPressLeftIcon
-                ? onPressLeftIcon
+              props.onPressLeftIcon
+                ? props.onPressLeftIcon
                 : () => {
-                  navigation.goBack();
-                }
+                    navigation.goBack();
+                  }
             }>
-            <View style={styles.leftIconContainer}>{leftIcon}</View>
+            <View style={styles.leftIconContainer}>{props.leftIcon}</View>
           </TouchableOpacity>
         )}
 
@@ -64,18 +60,19 @@ const Header = props => {
             ellipsizeMode="tail"
             style={[
               styles.toolbarTitle,
-              leftIconName === '' ? styles.paddingLeft16 : {},
+              props.leftIconName === '' ? styles.paddingLeft16 : {},
             ]}>
-            {title}
+            {props.title}
           </Text>
         </View>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={activeUser.id}
-            onValueChange={onChangeActiveUser}>
-            {users.map(user => <Picker.Item key={user.id} label={`${user.first_name} ${user.last_name}`} value={user.id} />)}
-          </Picker>
-        </View>
+        {!!props.rightIcon && (
+          <TouchableOpacity
+            accessibilityLabel={props.rightIconId}
+            testID={props.rightIconId}
+            onPress={props.onPressRightIcon}>
+            <View style={styles.leftIconContainer}>{props.rightIcon}</View>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

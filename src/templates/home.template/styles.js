@@ -18,11 +18,8 @@ const styles = StyleSheet.create({
   col: {
     flex: 1,
   },
-  horizonalDivider: {
-    width: 10,
-  },
-  fieldContainer: {
-    marginBottom: 10,
+  itemSeparator: {
+    height: 20,
   },
 });
 

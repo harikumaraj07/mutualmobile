@@ -5,32 +5,29 @@ export default StyleSheet.create({
     container: {
         height: heightPercent(100),
         width: widthPercent(100),
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        paddingHorizontal: 15,
+        backgroundColor: '#ffffff',
     },
     content: {
-        marginTop: heightPercent(5),
-        borderRadius: 5,
+        flexGrow: 1,
         maxHeight: heightPercent(100),
         backgroundColor: '#ffffff',
-        paddingTop: 50,
+        paddingTop: 20,
         paddingBottom: 20,
         paddingHorizontal: 20,
     },
     buttonContainer: {
-        alignItems: 'flex-end',
-    },
-    addButton: {
-        backgroundColor: '#2E384D',
-        paddingHorizontal: 15,
-        paddingVertical: 5,
-        borderRadius: 40,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#888888',
         justifyContent: 'space-between',
+        marginBottom: 20,
     },
-    addText: {
-        color: '#ffffff',
+    searchText: {
+        color: '#2E384D',
         marginLeft: 5,
     },
     closeButton: {
@@ -41,4 +38,12 @@ export default StyleSheet.create({
         borderRadius: 50,
         padding: 5,
     },
+    textInput: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#2E384D',
+    },
+    inputContainer: {
+        marginTop: 20,
+        paddingHorizontal: 20,
+    }
 });

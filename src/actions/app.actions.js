@@ -1,27 +1,47 @@
-import { SET_CONTACT_LIST, SET_ACTIVE_USER, ADD_DATA, UPDATE_DATA, REMOVE_DATA } from './types';
+import {
+  GET_ALL_POSTS,
+  GET_POST_DETAILS,
+  GET_USER_DETAILS,
+  GET_COMMENTS_FOR_POST,
+  GET_ALL_USERS,
+  CLEAR_COMMETS,
+  CLEAR_POST_DETAILS,
+  CLEAR_USER_DETAILS,
+} from './types';
+import api from '../services/api';
 
-export const setActiveUserAction = payload => dispatch => {
-  dispatch({ type: SET_ACTIVE_USER, payload });
-  dispatch(loadDataAction());
+export const getAllPostsAction = () => dispatch => {
+  return api('/posts', 'GET').then(payload => {
+    dispatch({ type: GET_ALL_POSTS, payload });
+  });
 };
 
-export const loadDataAction = () => (dispatch, getState) => {
-  const { app: { data, activeUser } } = getState();
-  const contacts = data.filter(_data => _data.userId === activeUser.userId);
-  dispatch({ type: SET_CONTACT_LIST, payload: contacts });
+export const getPostDetailsAction = id => dispatch => {
+  return api(`/posts/${id}`, 'GET').then(payload => {
+    dispatch({ type: GET_POST_DETAILS, payload });
+  });
 };
 
-export const addContactAction = payload => dispatch => {
-  dispatch({ type: ADD_DATA, payload });
-  dispatch(loadDataAction());
+export const getPostCommentsAction = id => dispatch => {
+  return api(`/posts/${id}/comments`, 'GET').then(payload => {
+    dispatch({ type: GET_COMMENTS_FOR_POST, payload });
+  });
 };
 
-export const updateContactAction = payload => dispatch => {
-  dispatch({ type: UPDATE_DATA, payload });
-  dispatch(loadDataAction());
+export const getUserDetailsAction = id => dispatch => {
+  return api(`/users/${id}`, 'GET').then(payload => {
+    dispatch({ type: GET_USER_DETAILS, payload });
+  });
 };
 
-export const removeContactAction = payload => dispatch => {
-  dispatch({ type: REMOVE_DATA, payload });
-  dispatch(loadDataAction());
+export const getAllUsersAction = () => dispatch => {
+  return api('/users', 'GET').then(payload => {
+    dispatch({ type: GET_ALL_USERS, payload });
+  });
 };
+
+export const clearCommentsAction = () => dispatch => dispatch({ type: CLEAR_COMMETS });
+
+export const clearUserDetailsAction = () => dispatch => dispatch({ type: CLEAR_USER_DETAILS });
+
+export const clearPostDetailsAction = () => dispatch => dispatch({ type: CLEAR_POST_DETAILS });

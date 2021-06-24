@@ -1,4 +1,4 @@
-const serverUrl = '';
+const serverUrl = 'https://jsonplaceholder.typicode.com';
 
 export default async (url, method, reqBody = null) => {
   try {

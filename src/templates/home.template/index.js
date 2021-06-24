@@ -3,30 +3,29 @@ import { View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Header from '../../components/Header';
-import Item from '../../components/Item';
-import ContactInput from './contactForm';
+import Item from '../../components/PostTile';
 import styles from './styles';
 
 const propTypes = {
-  contacts: PropTypes.array,
+  posts: PropTypes.array,
 };
 
 const defaultProps = {
-  contacts: [],
+  posts: [],
 };
 
 const HomeTemplate = props => {
-  const { contacts } = props;
+  const { posts } = props;
 
   return (
     <View style={styles.wrapper}>
-      <Header title="Contacts" leftIcon={null} {...props} />
+      <Header title="Posts" leftIcon={null} />
       <View style={styles.container}>
         <FlatList
-          ListHeaderComponent={<ContactInput {...props} />}
           contentContainerStyle={styles.content}
-          keyExtractor={key => key.phone}
-          data={contacts}
+          ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
+          keyExtractor={key => key.id}
+          data={posts}
           renderItem={data => <Item {...data} {...props} />}
         />
       </View>

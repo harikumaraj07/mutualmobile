@@ -1,7 +1,8 @@
-export const SET_DATA = 'SET_DATA';
-export const SET_CONTACT_LIST = 'SET_CONTACT_LIST';
-export const SET_ACTIVE_USER = 'SET_ACTIVE_USER';
-export const ADD_DATA = 'ADD_DATA';
-export const UPDATE_DATA = 'UPDATE_DATA';
-export const REMOVE_DATA = 'REMOVE_DATA';
-
+export const GET_ALL_POSTS = 'GET_ALL_POSTS';
+export const GET_POST_DETAILS = 'GET_POST_DETAILS';
+export const GET_USER_DETAILS = 'GET_USER_DETAILS';
+export const GET_COMMENTS_FOR_POST = 'GET_COMMENTS_FOR_POST';
+export const GET_ALL_USERS = 'GET_ALL_USERS';
+export const CLEAR_POST_DETAILS = 'CLEAR_POST_DETAILS';
+export const CLEAR_COMMETS = 'CLEAR_COMMETS';
+export const CLEAR_USER_DETAILS = 'CLEAR_USER_DETAILS';

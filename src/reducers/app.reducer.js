@@ -1,43 +1,63 @@
-import { SET_ACTIVE_USER, SET_CONTACT_LIST, SET_DATA, ADD_DATA, REMOVE_DATA, UPDATE_DATA } from '../actions/types';
-import { data, users } from '../utils/data.utils';
+import {
+  GET_ALL_POSTS,
+  GET_POST_DETAILS,
+  GET_USER_DETAILS,
+  GET_COMMENTS_FOR_POST,
+  GET_ALL_USERS,
+  CLEAR_COMMETS,
+  CLEAR_POST_DETAILS,
+  CLEAR_USER_DETAILS,
+} from '../actions/types';
 
 const initialState = {
-  activeUser: users[0],
-  contacts: data.filter(_data => _data.userId === users[0].userId),
-  data: data,
+  users: [],
+  posts: [],
+  postDetails: {},
+  comments: [],
+  userDetails: {},
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_CONTACT_LIST:
+    case GET_ALL_POSTS:
       return {
         ...state,
-        contacts: action.payload,
+        posts: action.payload,
       };
-    case SET_ACTIVE_USER:
+    case GET_POST_DETAILS:
       return {
         ...state,
-        activeUser: action.payload,
+        postDetails: action.payload,
       };
-    case SET_DATA:
+    case GET_USER_DETAILS:
       return {
         ...state,
-        data: action.payload,
+        userDetails: action.payload,
       };
-    case ADD_DATA:
+    case GET_COMMENTS_FOR_POST:
       return {
         ...state,
-        data: [action.payload, ...state.data],
+        comments: action.payload,
       };
-    case REMOVE_DATA:
+    case GET_ALL_USERS:
       return {
         ...state,
-        data: [...state.data.filter(_data => _data.id !== action.payload.id)],
+        users: action.payload,
       };
-    case UPDATE_DATA:
+    case CLEAR_COMMETS:
       return {
         ...state,
-        data: [...state.data.map(_data => _data.id === action.payload.id ? { ..._data, ...action.payload } : { ..._data })],
+        comments: [],
+      };
+    case CLEAR_USER_DETAILS:
+      return {
+        ...state,
+        userDetails: {},
+      };
+    case CLEAR_POST_DETAILS:
+      return {
+        ...state,
+        postDetails: [],
       };
     default:
       return state;
